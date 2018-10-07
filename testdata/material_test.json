@@ -1,0 +1,162 @@
+[
+    {
+        "name": "wood",
+        "value_factor": 1,
+        "weight_factor": 3,
+        "variants":[
+            "ash wood",
+            "bamboo wood",
+            "birch wood",
+            "cedar wood",
+            "cherry wood",
+            "corkwood",
+            "elm wood",
+            "eucalyptus wood",
+            "fir wood",
+            "ironwood",
+            "mahogany wood",
+            "maple wood",
+            "oak wood",
+            "pine wood",
+            "rosewood",
+            "sandalwood",
+            "spruce wood",
+            "walnut wood"
+        ]
+    },
+    {
+        "name": "base metal",
+        "value_factor": 5,
+        "weight_factor": 10,
+        "variants":[
+            "black iron",
+            "steel",
+            "copper",
+            "bronze",
+            "brass",
+            "pig iron",
+            "cast iron",
+            "lead",
+            "tin"
+        ]
+    },
+    {
+        "name": "precious metal",
+        "value_factor": 10,
+        "weight_factor": 8,
+        "variants":[
+            "gold",
+            "platinum",
+            "silver",
+            "copper",
+            "rose gold",
+            "electrum",
+            "white gold"
+        ]
+    },
+    {
+        "name": "stone",
+        "value_factor": 3,
+        "weight_factor": 9,
+        "variants":[
+            "granite",
+            "marble",
+            "alabaster",
+            "basalt",
+            "slate",
+            "sandstone",
+            "limestone",
+            "diorite",
+            "quartz",
+            "quartzite",
+            "obsidian",
+            "onyx",
+            "soapstone",
+            "serpentinite"
+        ]
+    },
+    {
+        "name": "cloth",
+        "value_factor": 2,
+        "weight_factor": 1,
+        "variants":[
+            "cotton",
+            "hempen cloth",
+            "linen",
+            "wool",
+            "cashmere",
+            "felt cloth",
+            "ramie cloth",
+            "flannel cloth",
+            "silk"
+        ]
+    },
+    {
+        "name": "gem",
+        "value_factor": 15,
+        "weight_factor": 5,
+        "variants":[
+            "agate",
+            "alexandrite",
+            "amazonite",
+            "amber",
+            "amethyst",
+            "aquamarine",
+            "azurite",
+            "bloodstone",
+            "citrine",
+            "diamond",
+            "emerald",
+            "garnet",
+            "jade",
+            "jet",
+            "lapis lazuli",
+            "malachite",
+            "moonstone",
+            "obsidian",
+            "onyx",
+            "opalite",
+            "pearl",
+            "peridot",
+            "quartz",
+            "rose quartz",
+            "ruby",
+            "sapphire",
+            "serpentine",
+            "sunstone",
+            "tiger eye",
+            "topaz",
+            "tourmaline",
+            "turquoise",
+            "zircon"
+        ]
+    },
+    {
+        "name": "leather",
+        "value_factor": 3,
+        "weight_factor": 2,
+        "variants":[
+            "calf leather",
+            "deer leather",
+            "crocodile leather",
+            "alligator leather",
+            "buffalo leather",
+            "stingray leather",
+            "shark leather"
+        ]
+    },
+    {
+        "name": "animal skin",
+        "value_factor": 3,
+        "weight_factor": 2,
+        "variants":[
+            "calfskin",
+            "deerskin",
+            "pig skin",
+            "lamb skin",
+            "snake skin",
+            "elk skin",
+            "buckskin"
+        ]
+    }
+]
