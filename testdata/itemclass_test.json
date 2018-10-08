@@ -1,7 +1,7 @@
 [
     {
         "name": "art",
-        "format": "<article> <material> <base> <verb> <article> <content>",
+        "format": "<article> <material> <base> <verb> <article> <detail>",
         "example": "<an> <ironwood> <statue> <crafted in the likeness of> <an> <eagle>",
         "verb_variants":[
             "crafted in the likeness of",
@@ -16,7 +16,7 @@
     },
     {
         "name": "liquid container",
-        "format": "<article> <material> <base> <verb> <content>",
+        "format": "<article> <material> <base> <verb> <detail>",
         "example": "<a> <calf leather> <wineskin> <half full of> <mulled ale>",
         "verb_variants":[
             "filled with",
@@ -34,7 +34,7 @@
     },
     {
         "name": "clothing",
-        "format": "<article> <material> <base> <verb> <content>",
+        "format": "<article> <material> <base> <verb> <detail>",
         "example": "<a> <hempen cloth> <sash> <dyed> <rose red>",
         "verb_variants":[
             "deeply dyed",
@@ -48,16 +48,15 @@
     },
     {
         "name": "jewelry",
-        "format": "<article> <material> <base> <verb> <content>",
-        "example": "<a> <hempen cloth> <sash> <dyed> <rose red>",
+        "format": "<article> <material> <base> <verb> <detail>",
+        "example": "<a> <rose gold> <wedding ring> <adorned with> <elven engravings>",
         "verb_variants":[
-            "deeply dyed",
-            "completely dyed",
-            "half dyed",
-            "faintly dyed",
-            "deeply colored",
-            "half colored",
-            "faintly colored"
+            "adorned with",
+            "designed with",
+            "crafted with",
+            "with hints of",
+            "embellished with",
+            "decorated with"
         ]
     }
 ]

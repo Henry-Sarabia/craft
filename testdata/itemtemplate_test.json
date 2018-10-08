@@ -38,6 +38,22 @@
         ]
     },
     {
+        "name": "flask",
+        "item_class": "container",
+        "base_value": 1,
+        "base_weight": 0.2,
+        "aliases":[
+            "decanter"
+        ],
+        "material_variants":[
+            "base metal",
+            "precious metal"
+        ],
+        "detail_variants":[
+            "beverage"
+        ]
+    },
+    {
         "name": "ring",
         "item_class": "jewelry",
         "base_value": 3,
