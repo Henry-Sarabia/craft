@@ -10,6 +10,6 @@ type itemTemplate struct {
 	DetailVariants   []string  `json:"detail_variants"`
 }
 
-func NewItem(temp itemTemplate, pool *CraftingPool) (*Item, error) {
+func NewItem(temp itemTemplate, pool *ResourcePool) (*Item, error) {
 	return nil, nil
 }

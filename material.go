@@ -5,4 +5,5 @@ type material struct {
 	ValueFactor  float64  `json:"value_factor"`
 	WeightFactor float64  `json:"weight_factor"`
 	Variants     []string `json:"variants"`
+	Modifiers    []string `json:"modifiers"`
 }

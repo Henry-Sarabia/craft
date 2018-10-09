@@ -22,6 +22,25 @@
             "sandalwood",
             "spruce wood",
             "walnut wood"
+        ],
+        "modifiers":[
+            "lightly water damaged",
+            "slightly charred",
+            "lightly scratched",
+            "lightly scarred",
+            "scarred",
+            "discolored",
+            "water damaged",
+            "notably scratched",
+            "notably scarred",
+            "notably charred",
+            "notably water damaged",
+            "heavily scarred",
+            "heavily water damaged",
+            "heavily charred",
+            "heavily scratched",
+            "severely water damaged",
+            "severely charred"
         ]
     },
     {
