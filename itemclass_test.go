@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const testItemClassFile = "testdata/itemclass_test.json"
+const testFileItemClass = "testdata/itemclass_test.json"
 
 func TestReadItemClasses(t *testing.T) {
-	f, err := os.Open(testItemClassFile)
+	f, err := os.Open(testFileItemClass)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestReadItemClassesEmpty(t *testing.T) {
 }
 
 func TestLoadItemClasses(t *testing.T) {
-	ic, err := loadItemClasses(testItemClassFile)
+	ic, err := loadItemClasses(testFileItemClass)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const testDetailFile = "testdata/detail_test.json"
+const testFileDetail = "testdata/detail_test.json"
 
 func TestReadDetails(t *testing.T) {
-	f, err := os.Open(testDetailFile)
+	f, err := os.Open(testFileDetail)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestReadDetailsEmpty(t *testing.T) {
 }
 
 func TestLoadDetails(t *testing.T) {
-	d, err := loadDetails(testDetailFile)
+	d, err := loadDetails(testFileDetail)
 	if err != nil {
 		t.Fatal(err)
 	}

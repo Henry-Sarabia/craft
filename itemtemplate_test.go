@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const testItemTemplateFile = "testdata/itemtemplate_test.json"
+const testFileItemTemplate = "testdata/itemtemplate_test.json"
 
 func TestReadItemTemplates(t *testing.T) {
-	f, err := os.Open(testItemTemplateFile)
+	f, err := os.Open(testFileItemTemplate)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestReadItemTemplatesEmpty(t *testing.T) {
 }
 
 func TestLoadItemTemplates(t *testing.T) {
-	it, err := loadItemTemplates(testItemTemplateFile)
+	it, err := loadItemTemplates(testFileItemTemplate)
 	if err != nil {
 		t.Fatal(err)
 	}

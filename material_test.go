@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const testMaterialFile = "testdata/material_test.json"
+const testFileMaterial = "testdata/material_test.json"
 
 func TestReadMaterials(t *testing.T) {
-	f, err := os.Open(testMaterialFile)
+	f, err := os.Open(testFileMaterial)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestReadMaterialsEmpty(t *testing.T) {
 }
 
 func TestLoadMaterials(t *testing.T) {
-	m, err := loadMaterials(testMaterialFile)
+	m, err := loadMaterials(testFileMaterial)
 	if err != nil {
 		t.Fatal(err)
 	}

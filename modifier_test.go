@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const testModifierFile = "testdata/modifier_test.json"
+const testFileModifier = "testdata/modifier_test.json"
 
 func TestReadModifiers(t *testing.T) {
-	f, err := os.Open(testModifierFile)
+	f, err := os.Open(testFileModifier)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestReadModifiersEmpty(t *testing.T) {
 }
 
 func TestLoadModifiers(t *testing.T) {
-	m, err := loadModifiers(testModifierFile)
+	m, err := loadModifiers(testFileModifier)
 	if err != nil {
 		t.Fatal(err)
 	}
