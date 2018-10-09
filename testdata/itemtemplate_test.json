@@ -11,7 +11,9 @@
         ],
         "material_variants":[
             "precious metal",
-            "wood"
+            "wood",
+            "gem",
+            "stone"
         ],
         "detail_variants":[
             "beast",
@@ -39,7 +41,7 @@
     },
     {
         "name": "flask",
-        "item_class": "container",
+        "item_class": "liquid container",
         "base_value": 1,
         "base_weight": 0.2,
         "aliases":[

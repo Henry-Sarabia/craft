@@ -3,6 +3,11 @@
         "name": "wood",
         "value_factor": 1,
         "weight_factor": 3,
+        "modifiers":[
+            "quality",
+            "wear",
+            "organic"
+        ],
         "variants":[
             "ash wood",
             "bamboo wood",
@@ -22,31 +27,17 @@
             "sandalwood",
             "spruce wood",
             "walnut wood"
-        ],
-        "modifiers":[
-            "lightly water damaged",
-            "slightly charred",
-            "lightly scratched",
-            "lightly scarred",
-            "scarred",
-            "discolored",
-            "water damaged",
-            "notably scratched",
-            "notably scarred",
-            "notably charred",
-            "notably water damaged",
-            "heavily scarred",
-            "heavily water damaged",
-            "heavily charred",
-            "heavily scratched",
-            "severely water damaged",
-            "severely charred"
         ]
     },
     {
         "name": "base metal",
         "value_factor": 5,
         "weight_factor": 10,
+        "modifiers":[
+            "quality",
+            "wear",
+            "metal"
+        ],
         "variants":[
             "black iron",
             "steel",
@@ -63,6 +54,11 @@
         "name": "precious metal",
         "value_factor": 10,
         "weight_factor": 8,
+        "modifiers":[
+            "quality",
+            "wear",
+            "metal"
+        ],
         "variants":[
             "gold",
             "platinum",
@@ -77,6 +73,11 @@
         "name": "stone",
         "value_factor": 3,
         "weight_factor": 9,
+        "modifiers":[
+            "quality",
+            "wear",
+            "composite"
+        ],
         "variants":[
             "granite",
             "marble",
@@ -98,6 +99,12 @@
         "name": "cloth",
         "value_factor": 2,
         "weight_factor": 1,
+        "modifiers":[
+            "quality",
+            "wear",
+            "textile",
+            "organic"
+        ],
         "variants":[
             "cotton",
             "hempen cloth",
@@ -114,6 +121,12 @@
         "name": "gem",
         "value_factor": 15,
         "weight_factor": 5,
+        "modifiers":[
+            "quality",
+            "wear",
+            "ceramic",
+            "composite"
+        ],
         "variants":[
             "agate",
             "alexandrite",
@@ -154,6 +167,12 @@
         "name": "leather",
         "value_factor": 3,
         "weight_factor": 2,
+        "modifiers":[
+            "quality",
+            "wear",
+            "organic",
+            "textile"
+        ],
         "variants":[
             "calf leather",
             "deer leather",
@@ -168,6 +187,12 @@
         "name": "animal skin",
         "value_factor": 3,
         "weight_factor": 2,
+        "modifiers":[
+            "quality",
+            "wear",
+            "organic",
+            "textile"
+        ],
         "variants":[
             "calfskin",
             "deerskin",

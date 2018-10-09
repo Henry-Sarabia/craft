@@ -33,20 +33,6 @@
         ]
     },
     {
-        "name": "clothing",
-        "format": "<article> <material> <base> <verb> <detail>",
-        "example": "<a> <hempen cloth> <sash> <dyed> <rose red>",
-        "verb_variants":[
-            "deeply dyed",
-            "completely dyed",
-            "half dyed",
-            "faintly dyed",
-            "deeply colored",
-            "half colored",
-            "faintly colored"
-        ]
-    },
-    {
         "name": "jewelry",
         "format": "<article> <material> <base> <verb> <detail>",
         "example": "<a> <rose gold> <wedding ring> <adorned with> <elven engravings>",
