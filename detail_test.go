@@ -19,8 +19,8 @@ func TestReadDetails(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(d) != 4 {
-		t.Errorf("got: <%v>, want: <%v>", len(d), 4)
+	if len(d) != 5 {
+		t.Errorf("got: <%v>, want: <%v>", len(d), 5)
 	}
 
 	if d["beverage"].Name != "beverage" {
@@ -47,8 +47,8 @@ func TestLoadDetails(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(d) != 4 {
-		t.Errorf("got: <%v>, want: <%v>", len(d), 4)
+	if len(d) != 5 {
+		t.Errorf("got: <%v>, want: <%v>", len(d), 5)
 	}
 
 	if d["beverage"].Name != "beverage" {
