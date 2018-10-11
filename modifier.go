@@ -4,11 +4,22 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 type modifier struct {
 	Name     string   `json:"name"`
 	Variants []string `json:"variants"`
+}
+
+func (m modifier) randomVariant() (string, error) {
+	v, err := randomString(m.Variants)
+	if err != nil {
+		return "", errors.Wrap(err, "modifier variants slice is empty")
+	}
+
+	return v, nil
 }
 
 func readModifiers(r io.Reader) (map[string]modifier, error) {
