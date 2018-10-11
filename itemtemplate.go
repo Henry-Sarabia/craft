@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 type itemTemplate struct {
@@ -19,6 +21,43 @@ type itemTemplate struct {
 // func NewItem(temp itemTemplate, pool *ResourcePool) (*Item, error) {
 // 	return nil, nil
 // }
+
+func (it *itemTemplate) randomAlias() (string, error) {
+	a, err := randomString(it.Aliases)
+	if err != nil {
+		return "", errors.Wrap(err, "itemTemplate aliases slice is empty")
+	}
+
+	return a, nil
+}
+
+func (it *itemTemplate) randomMaterial(res *Resources) (*material, error) {
+	matName, err := randomString(it.MaterialVariants)
+	if err != nil {
+		return nil, errors.Wrap(err, "itemTemplate material variants slice is empty")
+	}
+
+	mat, ok := res.materials[matName]
+	if !ok {
+		return nil, errors.Errorf("cannot find material '%s' in available resources", matName)
+	}
+
+	return &mat, nil
+}
+
+func (it *itemTemplate) randomDetail(res *Resources) (*detail, error) {
+	detName, err := randomString(it.DetailVariants)
+	if err != nil {
+		return nil, errors.Wrap(err, "itemTemplate detail variants slice is empty")
+	}
+
+	det, ok := res.details[detName]
+	if !ok {
+		return nil, errors.Errorf("cannot find detail '%s' in available resources", detName)
+	}
+
+	return &det, nil
+}
 
 func readItemTemplates(r io.Reader) (map[string]itemTemplate, error) {
 	var it []itemTemplate
