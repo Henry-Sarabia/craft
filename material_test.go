@@ -37,7 +37,7 @@ func TestReadMaterialsEmpty(t *testing.T) {
 
 	_, err := readMaterials(f)
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
 
@@ -63,6 +63,6 @@ func TestLoadMaterials(t *testing.T) {
 func TestLoadMaterialsEmpty(t *testing.T) {
 	_, err := loadMaterials("fake file name")
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }

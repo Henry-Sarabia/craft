@@ -1,7 +1,6 @@
 package craft
 
 import (
-	"io"
 	"os"
 	"testing"
 )
@@ -119,11 +118,11 @@ func TestReadResourcesEmpty(t *testing.T) {
 
 	var tests = []struct {
 		Name  string
-		Temp  io.Reader
-		Class io.Reader
-		Mat   io.Reader
-		Det   io.Reader
-		Mod   io.Reader
+		Temp  *os.File
+		Class *os.File
+		Mat   *os.File
+		Det   *os.File
+		Mod   *os.File
 	}{
 		{"Empty itemTemplate reader", emptyFile, class, mat, det, mod},
 		{"Empty itemClass reader", temp, emptyFile, mat, det, mod},
@@ -135,8 +134,15 @@ func TestReadResourcesEmpty(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			_, err := ReadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Mod)
 			if err == nil {
-				t.Errorf("got: <%v>, want: <nil>", err)
+				t.Error("got: <nil>, want: <error>")
 			}
+
+			// Rewind to beginning of files before next run
+			tt.Temp.Seek(0, 0)
+			tt.Class.Seek(0, 0)
+			tt.Mat.Seek(0, 0)
+			tt.Det.Seek(0, 0)
+			tt.Mod.Seek(0, 0)
 		})
 	}
 }
@@ -208,7 +214,7 @@ func TestLoadResourcesEmpty(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			_, err := LoadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Mod)
 			if err == nil {
-				t.Errorf("got: <%v>, want: <nil>", err)
+				t.Error("got: <nil>, want: <error>")
 			}
 		})
 	}

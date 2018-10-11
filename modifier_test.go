@@ -37,7 +37,7 @@ func TestReadModifiersEmpty(t *testing.T) {
 
 	_, err := readModifiers(f)
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
 
@@ -63,6 +63,6 @@ func TestLoadModifiers(t *testing.T) {
 func TestLoadModifiersEmpty(t *testing.T) {
 	_, err := loadModifiers("fake file name")
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
