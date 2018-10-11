@@ -1,11 +1,39 @@
 package craft
 
 import (
+	"math/rand"
 	"os"
 	"testing"
 )
 
 const testFileMaterial = "testdata/material_test.json"
+
+func TestMaterialRandomVariant(t *testing.T) {
+	rand.Seed(1)
+
+	d, err := loadMaterials(testFileMaterial)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	wood, err := d["wood"].randomVariant()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if wood != "corkwood" {
+		t.Errorf("got: <%v>, want: <%v>", wood, "corkwood")
+	}
+}
+
+func TestMaterialRandomVariantEmpty(t *testing.T) {
+	m := material{Name: "empty", Variants: []string{}}
+
+	_, err := m.randomVariant()
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
 
 func TestReadMaterials(t *testing.T) {
 	f, err := os.Open(testFileMaterial)

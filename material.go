@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 type material struct {
@@ -12,6 +14,15 @@ type material struct {
 	WeightFactor float64  `json:"weight_factor"`
 	Modifiers    []string `json:"modifiers"`
 	Variants     []string `json:"variants"`
+}
+
+func (m material) randomVariant() (string, error) {
+	v, err := randomString(m.Variants)
+	if err != nil {
+		return "", errors.Wrap(err, "material variants slice is empty")
+	}
+
+	return v, nil
 }
 
 func readMaterials(r io.Reader) (map[string]material, error) {
