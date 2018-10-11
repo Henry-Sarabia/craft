@@ -5,6 +5,33 @@ import (
 	"testing"
 )
 
+func TestResourcesRandomTemplate(t *testing.T) {
+	r, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileModifier)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tmp, err := r.randomTemplate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if tmp.Name == "" {
+		t.Errorf("got: <%v>, want: <%v>", "", tmp.Name)
+	}
+}
+
+func TestResourcesRandomTemplateEmpty(t *testing.T) {
+	r := Resources{
+		itemTemplates: map[string]itemTemplate{},
+	}
+
+	_, err := r.randomTemplate()
+	if err != errEmptyTemplateMap {
+		t.Errorf("got: <%v>, want: <%v>", nil, errEmptyTemplateMap)
+	}
+}
+
 func TestReadResources(t *testing.T) {
 	temp, err := os.Open(testFileItemTemplate)
 	if err != nil {

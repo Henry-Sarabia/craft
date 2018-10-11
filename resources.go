@@ -2,9 +2,12 @@ package craft
 
 import (
 	"io"
+	"math/rand"
 
 	"github.com/pkg/errors"
 )
+
+var errEmptyTemplateMap = errors.New("itemTemplate map is empty")
 
 // Resources contains all of the available resources to be used when generating
 // items.
@@ -14,6 +17,23 @@ type Resources struct {
 	materials     map[string]material
 	details       map[string]detail
 	modifiers     map[string]modifier
+}
+
+func (r *Resources) randomTemplate() (*itemTemplate, error) {
+	if len(r.itemTemplates) < 1 {
+		return nil, errEmptyTemplateMap
+	}
+	i := rand.Intn(len(r.itemTemplates))
+
+	var tmp itemTemplate
+	for _, tmp = range r.itemTemplates {
+		if i == 0 {
+			break
+		}
+		i--
+	}
+
+	return &tmp, nil
 }
 
 // ReadResources returns a pointer to an initialized Resources object populated
