@@ -4,11 +4,22 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 type detail struct {
 	Name     string   `json:"name"`
 	Variants []string `json:"variants"`
+}
+
+func (d detail) randomVariant() (string, error) {
+	v, err := randomString(d.Variants)
+	if err != nil {
+		return "", errors.Wrap(err, "detail variants slice is empty")
+	}
+
+	return v, nil
 }
 
 func readDetails(r io.Reader) (map[string]detail, error) {

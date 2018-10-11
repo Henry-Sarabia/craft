@@ -1,11 +1,39 @@
 package craft
 
 import (
+	"math/rand"
 	"os"
 	"testing"
 )
 
 const testFileDetail = "testdata/detail_test.json"
+
+func TestDetailRandomVariant(t *testing.T) {
+	rand.Seed(1)
+
+	d, err := loadDetails(testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	bev, err := d["beverage"].randomVariant()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if bev != "mulled mead" {
+		t.Errorf("got: <%v>, want: <%v>", bev, "mulled mead")
+	}
+}
+
+func TestDetailRandomVariantEmpty(t *testing.T) {
+	d := detail{Name: "empty", Variants: []string{}}
+
+	_, err := d.randomVariant()
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
 
 func TestReadDetails(t *testing.T) {
 	f, err := os.Open(testFileDetail)
@@ -37,7 +65,7 @@ func TestReadDetailsEmpty(t *testing.T) {
 
 	_, err := readDetails(f)
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
 
@@ -63,6 +91,6 @@ func TestLoadDetails(t *testing.T) {
 func TestLoadDetailsError(t *testing.T) {
 	_, err := loadDetails("fake file name")
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
