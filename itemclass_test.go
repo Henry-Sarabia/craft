@@ -1,11 +1,39 @@
 package craft
 
 import (
+	"math/rand"
 	"os"
 	"testing"
 )
 
 const testFileItemClass = "testdata/itemclass_test.json"
+
+func TestItemClassRandomVerb(t *testing.T) {
+	rand.Seed(1)
+
+	ic, err := loadItemClasses(testFileItemClass)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	v, err := ic["art"].randomVerb()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if v != "made to resemble" {
+		t.Errorf("got: <%v>, want: <%v>", v, "made to resemble")
+	}
+}
+
+func TestItemClassRandomVerbEmpty(t *testing.T) {
+	ic := itemClass{VerbVariants: []string{}}
+
+	_, err := ic.randomVerb()
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
 
 func TestReadItemClasses(t *testing.T) {
 	f, err := os.Open(testFileItemClass)
@@ -37,7 +65,7 @@ func TestReadItemClassesEmpty(t *testing.T) {
 
 	_, err := readItemClasses(f)
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }
 
@@ -63,6 +91,6 @@ func TestLoadItemClasses(t *testing.T) {
 func TestLoadItemClassesEmpty(t *testing.T) {
 	_, err := loadItemClasses("fake file name")
 	if err == nil {
-		t.Errorf("got: <%v>, want: <nil>", err)
+		t.Error("got: <nil>, want: <error>")
 	}
 }

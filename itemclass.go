@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 type itemClass struct {
@@ -11,6 +13,15 @@ type itemClass struct {
 	Format       string   `json:"format"`
 	Example      string   `json:"example"`
 	VerbVariants []string `json:"verb_variants"`
+}
+
+func (ic itemClass) randomVerb() (string, error) {
+	v, err := randomString(ic.VerbVariants)
+	if err != nil {
+		return "", errors.Wrap(err, "itemClass verb variants slice is empty")
+	}
+
+	return v, nil
 }
 
 func readItemClasses(r io.Reader) (map[string]itemClass, error) {
