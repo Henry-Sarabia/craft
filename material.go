@@ -16,6 +16,20 @@ type material struct {
 	Variants     []string `json:"variants"`
 }
 
+func (m material) randomModifier(res *Resources) (string, error) {
+	modName, err := randomString(m.Modifiers)
+	if err != nil {
+		return "", errors.Wrap(err, "material modifiers slice is empty")
+	}
+
+	mod, ok := res.modifiers[modName]
+	if !ok {
+		return "", errors.Errorf("cannot find modifier '%s' in available resources", modName)
+	}
+
+	return mod.randomVariant()
+}
+
 func (m material) randomVariant() (string, error) {
 	v, err := randomString(m.Variants)
 	if err != nil {

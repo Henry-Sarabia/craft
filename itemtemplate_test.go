@@ -8,7 +8,7 @@ import (
 
 const testFileItemTemplate = "testdata/itemtemplate_test.json"
 
-func TestItemTemplateRandomAlias(t *testing.T) {
+func TestItemTemplateAlias(t *testing.T) {
 	rand.Seed(1)
 
 	it, err := loadItemTemplates(testFileItemTemplate)
@@ -21,7 +21,7 @@ func TestItemTemplateRandomAlias(t *testing.T) {
 		t.Fatal("cannot find 'figurine' item template")
 	}
 
-	a, err := fig.randomAlias()
+	a, err := fig.getName()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -31,12 +31,12 @@ func TestItemTemplateRandomAlias(t *testing.T) {
 	}
 }
 
-func TestItemTemplateRandomAliasEmpty(t *testing.T) {
+func TestItemTemplateAliasEmpty(t *testing.T) {
 	it := itemTemplate{
 		Aliases: []string{},
 	}
 
-	_, err := it.randomAlias()
+	_, err := it.getName()
 	if err == nil {
 		t.Error("got: <nil>, want: <error>")
 	}

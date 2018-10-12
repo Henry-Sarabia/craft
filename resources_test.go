@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-func TestResourcesRandomTemplate(t *testing.T) {
+func TestResourcesSelectTemplate(t *testing.T) {
 	r, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileModifier)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	tmp, err := r.randomTemplate()
+	tmp, err := r.selectTemplate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,12 +21,12 @@ func TestResourcesRandomTemplate(t *testing.T) {
 	}
 }
 
-func TestResourcesRandomTemplateEmpty(t *testing.T) {
+func TestResourcesSelectTemplateEmpty(t *testing.T) {
 	r := Resources{
 		itemTemplates: map[string]itemTemplate{},
 	}
 
-	_, err := r.randomTemplate()
+	_, err := r.selectTemplate()
 	if err != errEmptyTemplateMap {
 		t.Errorf("got: <%v>, want: <%v>", nil, errEmptyTemplateMap)
 	}

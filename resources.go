@@ -14,17 +14,32 @@ var errEmptyTemplateMap = errors.New("itemTemplate map is empty")
 type Resources struct {
 	itemTemplates map[string]itemTemplate
 	itemClasses   map[string]itemClass
+	modifiers     map[string]modifier
 	materials     map[string]material
 	details       map[string]detail
-	modifiers     map[string]modifier
 }
 
-func (r *Resources) randomTemplate() (*itemTemplate, error) {
+func (r *Resources) NewItem() (*Item, error) {
+	tmp, err := r.selectTemplate()
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot select a template from resources")
+	}
+
+	i, err := generateItem(tmp, r)
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot generate item")
+	}
+
+	return i, nil
+}
+
+func (r *Resources) selectTemplate() (*itemTemplate, error) {
 	if len(r.itemTemplates) < 1 {
 		return nil, errEmptyTemplateMap
 	}
 	i := rand.Intn(len(r.itemTemplates))
 
+	// fix this. why set itemtemplate ever iteration? why decrementing?
 	var tmp itemTemplate
 	for _, tmp = range r.itemTemplates {
 		if i == 0 {

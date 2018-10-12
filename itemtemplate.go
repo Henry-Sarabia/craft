@@ -18,17 +18,103 @@ type itemTemplate struct {
 	DetailVariants   []string `json:"detail_variants"`
 }
 
-// func NewItem(temp itemTemplate, pool *ResourcePool) (*Item, error) {
-// 	return nil, nil
+// func (it *itemTemplate) CraftWith(res *Resources) (*Item, error) {
+
 // }
 
-func (it *itemTemplate) randomAlias() (string, error) {
+func (it *itemTemplate) craftPrototype(res *Resources) (*itemPrototype, error) {
+	name, err := it.getName()
+	if err != nil {
+		return nil, err
+	}
+
+	cl, ok := res.itemClasses[it.ItemClass]
+	if !ok {
+		return nil, errors.Errorf("cannot find item class '%s' in available resources", it.ItemClass)
+	}
+
+	mat, err := it.randomMaterial(res)
+	if err != nil {
+		return nil, err
+	}
+
+	det, err := it.randomDetail(res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &itemPrototype{
+		name:     name,
+		value:    it.BaseValue,
+		weight:   it.BaseWeight,
+		class:    &cl,
+		material: mat,
+		detail:   det,
+	}, nil
+}
+
+func (it *itemTemplate) getName() (string, error) {
 	a, err := randomString(it.Aliases)
 	if err != nil {
 		return "", errors.Wrap(err, "itemTemplate aliases slice is empty")
 	}
 
 	return a, nil
+}
+
+func (it *itemTemplate) getQuality(res *Resources) (string, error) {
+	mat, err := it.randomMaterial(res)
+	if err != nil {
+		return "", err
+	}
+
+	q, err := mat.randomModifier(res)
+	if err != nil {
+		return "", err
+	}
+
+	return q, nil
+}
+
+func (it *itemTemplate) getMaterial(res *Resources) (string, error) {
+	mat, err := it.randomMaterial(res)
+	if err != nil {
+		return "", err
+	}
+
+	vrnt, err := mat.randomVariant()
+	if err != nil {
+		return "", err
+	}
+
+	return vrnt, nil
+}
+
+func (it *itemTemplate) getDetail(res *Resources) (string, error) {
+	det, err := it.randomDetail(res)
+	if err != nil {
+		return "", err
+	}
+
+	vrnt, err := det.randomVariant()
+	if err != nil {
+		return "", err
+	}
+
+	return vrnt, nil
+}
+
+func (it *itemTemplate) getFormat(res *Resources) (string, error) {
+	cl, ok := res.itemClasses[it.ItemClass]
+	if !ok {
+		return "", errors.Errorf("cannot find item class '%s' in available resources", it.ItemClass)
+	}
+
+	return cl.Format, nil
+}
+
+func (it *itemTemplate) getValue(res *Resources) (float64, error) {
+	return 0, nil
 }
 
 func (it *itemTemplate) randomMaterial(res *Resources) (*material, error) {

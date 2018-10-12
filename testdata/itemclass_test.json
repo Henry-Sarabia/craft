@@ -1,7 +1,7 @@
 [
     {
         "name": "art",
-        "format": "<article> <material> <base> <verb> <article> <detail>",
+        "format": "<article> <quality> <material> <name> <verb> <article> <detail>",
         "example": "<an> <ironwood> <statue> <crafted in the likeness of> <an> <eagle>",
         "verb_variants":[
             "crafted in the likeness of",
@@ -16,7 +16,7 @@
     },
     {
         "name": "liquid container",
-        "format": "<article> <material> <base> <verb> <detail>",
+        "format": "<article> <quality> <material> <name> <verb> <detail>",
         "example": "<a> <calf leather> <wineskin> <half full of> <mulled ale>",
         "verb_variants":[
             "filled with",
@@ -34,7 +34,7 @@
     },
     {
         "name": "jewelry",
-        "format": "<article> <material> <base> <verb> <detail>",
+        "format": "<article> <quality> <material> <name> <verb> <detail>",
         "example": "<a> <rose gold> <wedding ring> <adorned with> <elven engravings>",
         "verb_variants":[
             "adorned with",
