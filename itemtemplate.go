@@ -18,10 +18,6 @@ type itemTemplate struct {
 	DetailVariants   []string `json:"detail_variants"`
 }
 
-// func (it *itemTemplate) CraftWith(res *Resources) (*Item, error) {
-
-// }
-
 func (it *itemTemplate) craftPrototype(res *Resources) (*itemPrototype, error) {
 	name, err := it.getName()
 	if err != nil {

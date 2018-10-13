@@ -14,11 +14,11 @@ func (ip *itemPrototype) craftItem(res *Resources) (*Item, error) {
 
 	var err error
 
-	if i.Quality, err = ip.getQuality(res); err != nil {
+	if i.Material, err = ip.getMaterial(); err != nil {
 		return nil, err
 	}
 
-	if i.Material, err = ip.getMaterial(); err != nil {
+	if i.Quality, err = ip.getQuality(res); err != nil {
 		return nil, err
 	}
 
@@ -41,15 +41,6 @@ func (ip *itemPrototype) craftItem(res *Resources) (*Item, error) {
 	return i, nil
 }
 
-func (ip *itemPrototype) getQuality(res *Resources) (string, error) {
-	q, err := ip.material.randomModifier(res)
-	if err != nil {
-		return "", err
-	}
-
-	return q, nil
-}
-
 func (ip *itemPrototype) getMaterial() (string, error) {
 	m, err := ip.material.randomVariant()
 	if err != nil {
@@ -57,6 +48,15 @@ func (ip *itemPrototype) getMaterial() (string, error) {
 	}
 
 	return m, nil
+}
+
+func (ip *itemPrototype) getQuality(res *Resources) (string, error) {
+	q, err := ip.material.randomModifier(res)
+	if err != nil {
+		return "", err
+	}
+
+	return q, nil
 }
 
 func (ip *itemPrototype) getDetail() (string, error) {

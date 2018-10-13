@@ -10,10 +10,10 @@ import (
 // Item represents an item that would commonly be found in a medieval RPG game.
 type Item struct {
 	Name     string  `json:"name"`
-	Format   string  `json:"format"`
-	Quality  string  `json:"quality"`
 	Material string  `json:"material"`
+	Quality  string  `json:"quality"`
 	Detail   string  `json:"detail"`
+	Format   string  `json:"format"`
 	Verb     string  `json:"verb"`
 	Value    float64 `json:"value"`
 	Weight   float64 `json:"weight"`
@@ -66,23 +66,23 @@ func tokenize(format string) ([]string, error) {
 func (i *Item) parse(tok []string) (string, error) {
 	for j := len(tok) - 1; j >= 0; j-- {
 		switch tok[j] {
-		case "<article>":
-			tok[j] = article.Indefinite(tok[j+1])
-
-		case "<quality>":
-			tok[j] = i.Quality
+		case "<name>":
+			tok[j] = i.Name
 
 		case "<material>":
 			tok[j] = i.Material
 
-		case "<name>":
-			tok[j] = i.Name
-
-		case "<verb>":
-			tok[j] = i.Verb
+		case "<quality>":
+			tok[j] = i.Quality
 
 		case "<detail>":
 			tok[j] = i.Detail
+
+		case "<article>":
+			tok[j] = article.Indefinite(tok[j+1])
+
+		case "<verb>":
+			tok[j] = i.Verb
 
 		default:
 			return "", errors.Errorf("unexpected token '%v' in item format", tok[j])

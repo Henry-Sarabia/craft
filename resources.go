@@ -14,8 +14,8 @@ var errEmptyTemplateMap = errors.New("itemTemplate map is empty")
 type Resources struct {
 	itemTemplates map[string]itemTemplate
 	itemClasses   map[string]itemClass
-	qualities     map[string]quality
 	materials     map[string]material
+	qualities     map[string]quality
 	details       map[string]detail
 }
 
@@ -53,7 +53,7 @@ func (r *Resources) selectTemplate() (*itemTemplate, error) {
 
 // ReadResources returns a pointer to an initialized Resources object populated
 // with data read from the provided readers.
-func ReadResources(temp, class, mat, det, qual io.Reader) (*Resources, error) {
+func ReadResources(temp, class, mat, qual, det io.Reader) (*Resources, error) {
 	var err error
 	rp := &Resources{}
 
@@ -72,12 +72,12 @@ func ReadResources(temp, class, mat, det, qual io.Reader) (*Resources, error) {
 		return nil, err
 	}
 
-	rp.details, err = readDetails(det)
+	rp.qualities, err = readQualities(qual)
 	if err != nil {
 		return nil, err
 	}
 
-	rp.qualities, err = readQualities(qual)
+	rp.details, err = readDetails(det)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func ReadResources(temp, class, mat, det, qual io.Reader) (*Resources, error) {
 
 // LoadResources returns a pointer to an initialized Resources object populated
 // with data found using the provided file names.
-func LoadResources(tempFile, classFile, matFile, detFile, qualFile string) (*Resources, error) {
+func LoadResources(tempFile, classFile, matFile, qualFile, detFile string) (*Resources, error) {
 	temp, err := loadItemTemplates(tempFile)
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot load item templates from file named '%s'", tempFile)
@@ -103,21 +103,21 @@ func LoadResources(tempFile, classFile, matFile, detFile, qualFile string) (*Res
 		return nil, errors.Wrapf(err, "cannot load materials from file named '%s'", matFile)
 	}
 
-	det, err := loadDetails(detFile)
-	if err != nil {
-		return nil, errors.Wrapf(err, "cannot load details from file named '%s'", detFile)
-	}
-
 	qual, err := loadQualities(qualFile)
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot load qualities from file named '%s'", qualFile)
+	}
+
+	det, err := loadDetails(detFile)
+	if err != nil {
+		return nil, errors.Wrapf(err, "cannot load details from file named '%s'", detFile)
 	}
 
 	return &Resources{
 		itemTemplates: temp,
 		itemClasses:   class,
 		materials:     mat,
-		details:       det,
 		qualities:     qual,
+		details:       det,
 	}, nil
 }

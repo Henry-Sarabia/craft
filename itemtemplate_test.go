@@ -45,7 +45,7 @@ func TestItemTemplateAliasEmpty(t *testing.T) {
 func TestItemTemplateRandomMaterial(t *testing.T) {
 	rand.Seed(1)
 
-	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileQuality)
+	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileQuality, testFileDetail)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -97,7 +97,7 @@ func TestItemTemplateRandomMaterialEmpty(t *testing.T) {
 func TestItemTemplateRandomDetail(t *testing.T) {
 	rand.Seed(1)
 
-	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileQuality)
+	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileQuality, testFileDetail)
 	if err != nil {
 		t.Fatal(err)
 	}
