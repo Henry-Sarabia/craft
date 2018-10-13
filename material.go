@@ -12,22 +12,22 @@ type material struct {
 	Name         string   `json:"name"`
 	ValueFactor  float64  `json:"value_factor"`
 	WeightFactor float64  `json:"weight_factor"`
-	Modifiers    []string `json:"modifiers"`
+	Qualities    []string `json:"qualities"`
 	Variants     []string `json:"variants"`
 }
 
 func (m material) randomModifier(res *Resources) (string, error) {
-	modName, err := randomString(m.Modifiers)
+	qualName, err := randomString(m.Qualities)
 	if err != nil {
-		return "", errors.Wrap(err, "material modifiers slice is empty")
+		return "", errors.Wrap(err, "material qualities slice is empty")
 	}
 
-	mod, ok := res.modifiers[modName]
+	qual, ok := res.qualities[qualName]
 	if !ok {
-		return "", errors.Errorf("cannot find modifier '%s' in available resources", modName)
+		return "", errors.Errorf("cannot find quality '%s' in available resources", qualName)
 	}
 
-	return mod.randomVariant()
+	return qual.randomVariant()
 }
 
 func (m material) randomVariant() (string, error) {

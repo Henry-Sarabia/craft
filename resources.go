@@ -14,7 +14,7 @@ var errEmptyTemplateMap = errors.New("itemTemplate map is empty")
 type Resources struct {
 	itemTemplates map[string]itemTemplate
 	itemClasses   map[string]itemClass
-	modifiers     map[string]modifier
+	qualities     map[string]quality
 	materials     map[string]material
 	details       map[string]detail
 }
@@ -53,7 +53,7 @@ func (r *Resources) selectTemplate() (*itemTemplate, error) {
 
 // ReadResources returns a pointer to an initialized Resources object populated
 // with data read from the provided readers.
-func ReadResources(temp, class, mat, det, mod io.Reader) (*Resources, error) {
+func ReadResources(temp, class, mat, det, qual io.Reader) (*Resources, error) {
 	var err error
 	rp := &Resources{}
 
@@ -77,7 +77,7 @@ func ReadResources(temp, class, mat, det, mod io.Reader) (*Resources, error) {
 		return nil, err
 	}
 
-	rp.modifiers, err = readModifiers(mod)
+	rp.qualities, err = readQualities(qual)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func ReadResources(temp, class, mat, det, mod io.Reader) (*Resources, error) {
 
 // LoadResources returns a pointer to an initialized Resources object populated
 // with data found using the provided file names.
-func LoadResources(tempFile, classFile, matFile, detFile, modFile string) (*Resources, error) {
+func LoadResources(tempFile, classFile, matFile, detFile, qualFile string) (*Resources, error) {
 	temp, err := loadItemTemplates(tempFile)
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot load item templates from file named '%s'", tempFile)
@@ -108,9 +108,9 @@ func LoadResources(tempFile, classFile, matFile, detFile, modFile string) (*Reso
 		return nil, errors.Wrapf(err, "cannot load details from file named '%s'", detFile)
 	}
 
-	mod, err := loadModifiers(modFile)
+	qual, err := loadQualities(qualFile)
 	if err != nil {
-		return nil, errors.Wrapf(err, "cannot load modifiers from file named '%s'", modFile)
+		return nil, errors.Wrapf(err, "cannot load qualities from file named '%s'", qualFile)
 	}
 
 	return &Resources{
@@ -118,6 +118,6 @@ func LoadResources(tempFile, classFile, matFile, detFile, modFile string) (*Reso
 		itemClasses:   class,
 		materials:     mat,
 		details:       det,
-		modifiers:     mod,
+		qualities:     qual,
 	}, nil
 }

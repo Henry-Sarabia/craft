@@ -6,7 +6,7 @@ import (
 )
 
 func TestResourcesSelectTemplate(t *testing.T) {
-	r, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileModifier)
+	r, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileQuality)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,13 +57,13 @@ func TestReadResources(t *testing.T) {
 	}
 	defer det.Close()
 
-	mod, err := os.Open(testFileModifier)
+	qual, err := os.Open(testFileQuality)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer mod.Close()
+	defer qual.Close()
 
-	res, err := ReadResources(temp, class, mat, det, mod)
+	res, err := ReadResources(temp, class, mat, det, qual)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -100,12 +100,12 @@ func TestReadResources(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", res.details["beverage"].Name, "beverage")
 	}
 
-	if len(res.modifiers) != 7 {
-		t.Errorf("got: <%v>, want: <%v>", len(res.modifiers), 7)
+	if len(res.qualities) != 7 {
+		t.Errorf("got: <%v>, want: <%v>", len(res.qualities), 7)
 	}
 
-	if res.modifiers["wear"].Name != "wear" {
-		t.Errorf("got: <%v>, want: <%v>", res.modifiers["wear"].Name, "wear")
+	if res.qualities["wear"].Name != "wear" {
+		t.Errorf("got: <%v>, want: <%v>", res.qualities["wear"].Name, "wear")
 	}
 
 }
@@ -137,11 +137,11 @@ func TestReadResourcesEmpty(t *testing.T) {
 	}
 	defer det.Close()
 
-	mod, err := os.Open(testFileModifier)
+	qual, err := os.Open(testFileQuality)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer mod.Close()
+	defer qual.Close()
 
 	var tests = []struct {
 		Name  string
@@ -149,17 +149,17 @@ func TestReadResourcesEmpty(t *testing.T) {
 		Class *os.File
 		Mat   *os.File
 		Det   *os.File
-		Mod   *os.File
+		Qual  *os.File
 	}{
-		{"Empty itemTemplate reader", emptyFile, class, mat, det, mod},
-		{"Empty itemClass reader", temp, emptyFile, mat, det, mod},
-		{"Empty material reader", temp, class, emptyFile, det, mod},
-		{"Empty detail reader", temp, class, mat, emptyFile, mod},
-		{"Empty modifier reader", temp, class, mat, det, emptyFile},
+		{"Empty itemTemplate reader", emptyFile, class, mat, det, qual},
+		{"Empty itemClass reader", temp, emptyFile, mat, det, qual},
+		{"Empty material reader", temp, class, emptyFile, det, qual},
+		{"Empty detail reader", temp, class, mat, emptyFile, qual},
+		{"Empty quality reader", temp, class, mat, det, emptyFile},
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			_, err := ReadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Mod)
+			_, err := ReadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Qual)
 			if err == nil {
 				t.Error("got: <nil>, want: <error>")
 			}
@@ -169,13 +169,13 @@ func TestReadResourcesEmpty(t *testing.T) {
 			tt.Class.Seek(0, 0)
 			tt.Mat.Seek(0, 0)
 			tt.Det.Seek(0, 0)
-			tt.Mod.Seek(0, 0)
+			tt.Qual.Seek(0, 0)
 		})
 	}
 }
 
 func TestLoadResources(t *testing.T) {
-	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileModifier)
+	res, err := LoadResources(testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, testFileQuality)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -212,12 +212,12 @@ func TestLoadResources(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", res.details["beverage"].Name, "beverage")
 	}
 
-	if len(res.modifiers) != 7 {
-		t.Errorf("got: <%v>, want: <%v>", len(res.modifiers), 7)
+	if len(res.qualities) != 7 {
+		t.Errorf("got: <%v>, want: <%v>", len(res.qualities), 7)
 	}
 
-	if res.modifiers["wear"].Name != "wear" {
-		t.Errorf("got: <%v>, want: <%v>", res.modifiers["wear"].Name, "wear")
+	if res.qualities["wear"].Name != "wear" {
+		t.Errorf("got: <%v>, want: <%v>", res.qualities["wear"].Name, "wear")
 	}
 }
 
@@ -229,17 +229,17 @@ func TestLoadResourcesEmpty(t *testing.T) {
 		Class string
 		Mat   string
 		Det   string
-		Mod   string
+		Qual  string
 	}{
-		{"Non-existant itemTemplate file", fakeFile, testFileItemClass, testFileMaterial, testFileDetail, testFileModifier},
-		{"Non-existant itemClass file", testFileItemTemplate, fakeFile, testFileMaterial, testFileDetail, testFileModifier},
-		{"Non-existant material file", testFileItemTemplate, testFileItemClass, fakeFile, testFileDetail, testFileModifier},
-		{"Non-existant detail file", testFileItemTemplate, testFileItemClass, testFileMaterial, fakeFile, testFileModifier},
-		{"Non-existant modifier file", testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, fakeFile},
+		{"Non-existant itemTemplate file", fakeFile, testFileItemClass, testFileMaterial, testFileDetail, testFileQuality},
+		{"Non-existant itemClass file", testFileItemTemplate, fakeFile, testFileMaterial, testFileDetail, testFileQuality},
+		{"Non-existant material file", testFileItemTemplate, testFileItemClass, fakeFile, testFileDetail, testFileQuality},
+		{"Non-existant detail file", testFileItemTemplate, testFileItemClass, testFileMaterial, fakeFile, testFileQuality},
+		{"Non-existant quality file", testFileItemTemplate, testFileItemClass, testFileMaterial, testFileDetail, fakeFile},
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			_, err := LoadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Mod)
+			_, err := LoadResources(tt.Temp, tt.Class, tt.Mat, tt.Det, tt.Qual)
 			if err == nil {
 				t.Error("got: <nil>, want: <error>")
 			}
