@@ -33,6 +33,34 @@ func (r *Resources) NewItem() (*Item, error) {
 	return i, nil
 }
 
+func (r *Resources) getDetail(name string) (*detail, error) {
+	det, ok := r.details[name]
+	if !ok {
+		return nil, errors.Errorf("cannot find '%s' in Resources.details", name)
+	}
+
+	return &det, nil
+}
+
+func (r *Resources) getDetails(ref map[string]string) (map[string]*detail, error) {
+	if len(ref) < 1 {
+		return nil, errors.New("detail reference slice is empty")
+	}
+
+	m := make(map[string]*detail)
+
+	for lbl, v := range ref {
+		d, err := r.getDetail(v)
+		if err != nil {
+			return nil, err
+		}
+
+		m[lbl] = d
+	}
+
+	return m, nil
+}
+
 func (r *Resources) selectTemplate() (*itemTemplate, error) {
 	if len(r.itemTemplates) < 1 {
 		return nil, errEmptyTemplateMap

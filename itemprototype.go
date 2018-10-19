@@ -6,7 +6,7 @@ type itemPrototype struct {
 	weight   float64
 	class    *itemClass
 	material *material
-	detail   *detail
+	details  map[string]*detail
 }
 
 func (ip *itemPrototype) craftItem(res *Resources) (*Item, error) {
@@ -22,7 +22,7 @@ func (ip *itemPrototype) craftItem(res *Resources) (*Item, error) {
 		return nil, err
 	}
 
-	if i.Detail, err = ip.getDetail(); err != nil {
+	if i.Details, err = ip.getDetails(); err != nil {
 		return nil, err
 	}
 
@@ -51,7 +51,7 @@ func (ip *itemPrototype) getMaterial() (string, error) {
 }
 
 func (ip *itemPrototype) getQuality(res *Resources) (string, error) {
-	q, err := ip.material.randomModifier(res)
+	q, err := ip.material.randomQuality(res)
 	if err != nil {
 		return "", err
 	}
@@ -59,14 +59,29 @@ func (ip *itemPrototype) getQuality(res *Resources) (string, error) {
 	return q, nil
 }
 
-func (ip *itemPrototype) getDetail() (string, error) {
-	d, err := ip.detail.randomVariant()
-	if err != nil {
-		return "", err
+func (ip *itemPrototype) getDetails() (map[string]string, error) {
+	m := make(map[string]string)
+
+	for lbl, d := range ip.details {
+		det, err := d.randomVariant()
+		if err != nil {
+			return nil, err
+		}
+
+		m[lbl] = det
 	}
 
-	return d, nil
+	return m, nil
 }
+
+// func (ip *itemPrototype) getDetail() (string, error) {
+// 	d, err := ip.detail.randomVariant()
+// 	if err != nil {
+// 		return "", err
+// 	}
+
+// 	return d, nil
+// }
 
 func (ip *itemPrototype) getFormat() (string, error) {
 	return ip.class.Format, nil

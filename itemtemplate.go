@@ -9,13 +9,13 @@ import (
 )
 
 type itemTemplate struct {
-	Name             string   `json:"name"`
-	ItemClass        string   `json:"item_class"`
-	BaseValue        float64  `json:"base_value"`  // Measured in gold pieces
-	BaseWeight       float64  `json:"base_weight"` // Measured in pounds
-	Aliases          []string `json:"aliases"`
-	MaterialVariants []string `json:"material_variants"`
-	DetailVariants   []string `json:"detail_variants"`
+	Name             string            `json:"name"`
+	ItemClass        string            `json:"item_class"`
+	BaseValue        float64           `json:"base_value"`  // Measured in gold pieces
+	BaseWeight       float64           `json:"base_weight"` // Measured in pounds
+	Aliases          []string          `json:"aliases"`
+	MaterialVariants []string          `json:"material_variants"`
+	DetailVariants   []detailReference `json:"detail_variants"`
 }
 
 func (it *itemTemplate) craftPrototype(res *Resources) (*itemPrototype, error) {
@@ -34,7 +34,12 @@ func (it *itemTemplate) craftPrototype(res *Resources) (*itemPrototype, error) {
 		return nil, err
 	}
 
-	det, err := it.randomDetail(res)
+	d, err := it.randomDetails()
+	if err != nil {
+		return nil, err
+	}
+
+	dets, err := res.getDetails(d)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +50,7 @@ func (it *itemTemplate) craftPrototype(res *Resources) (*itemPrototype, error) {
 		weight:   it.BaseWeight,
 		class:    &cl,
 		material: mat,
-		detail:   det,
+		details:  dets,
 	}, nil
 }
 
@@ -64,7 +69,7 @@ func (it *itemTemplate) getQuality(res *Resources) (string, error) {
 		return "", err
 	}
 
-	q, err := mat.randomModifier(res)
+	q, err := mat.randomQuality(res)
 	if err != nil {
 		return "", err
 	}
@@ -79,20 +84,6 @@ func (it *itemTemplate) getMaterial(res *Resources) (string, error) {
 	}
 
 	vrnt, err := mat.randomVariant()
-	if err != nil {
-		return "", err
-	}
-
-	return vrnt, nil
-}
-
-func (it *itemTemplate) getDetail(res *Resources) (string, error) {
-	det, err := it.randomDetail(res)
-	if err != nil {
-		return "", err
-	}
-
-	vrnt, err := det.randomVariant()
 	if err != nil {
 		return "", err
 	}
@@ -127,18 +118,18 @@ func (it *itemTemplate) randomMaterial(res *Resources) (*material, error) {
 	return &mat, nil
 }
 
-func (it *itemTemplate) randomDetail(res *Resources) (*detail, error) {
-	detName, err := randomString(it.DetailVariants)
-	if err != nil {
-		return nil, errors.Wrap(err, "itemTemplate detail variants slice is empty")
+func (it *itemTemplate) randomDetails() (map[string]string, error) {
+	m := make(map[string]string)
+
+	for _, d := range it.DetailVariants {
+		r, err := d.random()
+		if err != nil {
+			return nil, errors.Wrap(err, "cannot get random detailReference variant from itemTemplate")
+		}
+		m[d.Label] = r
 	}
 
-	det, ok := res.details[detName]
-	if !ok {
-		return nil, errors.Errorf("cannot find detail '%s' in available resources", detName)
-	}
-
-	return &det, nil
+	return m, nil
 }
 
 func readItemTemplates(r io.Reader) (map[string]itemTemplate, error) {

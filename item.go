@@ -9,14 +9,14 @@ import (
 
 // Item represents an item that would commonly be found in a medieval RPG game.
 type Item struct {
-	Name     string  `json:"name"`
-	Material string  `json:"material"`
-	Quality  string  `json:"quality"`
-	Detail   string  `json:"detail"`
-	Format   string  `json:"format"`
-	Verb     string  `json:"verb"`
-	Value    float64 `json:"value"`
-	Weight   float64 `json:"weight"`
+	Name     string            `json:"name"`
+	Material string            `json:"material"`
+	Quality  string            `json:"quality"`
+	Details  map[string]string `json:"detail"`
+	Format   string            `json:"format"`
+	Verb     string            `json:"verb"`
+	Value    float64           `json:"value"`
+	Weight   float64           `json:"weight"`
 
 	Description string `json:"description"`
 }
@@ -47,7 +47,7 @@ func (i *Item) composeDescription() error {
 		return err
 	}
 
-	i.Description, err = i.parse(tok)
+	i.Description, err = i.replaceTokens(tok)
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,19 @@ func tokenize(format string) ([]string, error) {
 	return tok, nil
 }
 
-func (i *Item) parse(tok []string) (string, error) {
+func (i *Item) replaceDetailTokens(tok []string) []string {
+	for j, t := range tok {
+		t = strings.Trim(t, "<>")
+		if d, ok := i.Details[t]; ok {
+			tok[j] = d
+		}
+	}
+
+	return tok
+}
+
+func (i *Item) replaceTokens(tok []string) (string, error) {
+	tok = i.replaceDetailTokens(tok)
 	for j := len(tok) - 1; j >= 0; j-- {
 		switch tok[j] {
 		case "<name>":
@@ -75,27 +87,13 @@ func (i *Item) parse(tok []string) (string, error) {
 		case "<quality>":
 			tok[j] = i.Quality
 
-		case "<detail>":
-			tok[j] = i.Detail
-
 		case "<article>":
 			tok[j] = article.Indefinite(tok[j+1])
 
 		case "<verb>":
 			tok[j] = i.Verb
-
-		default:
-			return "", errors.Errorf("unexpected token '%v' in item format", tok[j])
 		}
 	}
 
 	return strings.Join(tok, " "), nil
 }
-
-// func parse(tok []string, tokMap map[string]string) (string, error) {
-// 	for i := len(tok) - 1; i >= 0; i-- {
-// 		cur, ok := tokMap[tok[i]]
-
-// 		if tok[i]
-// 	}
-// }

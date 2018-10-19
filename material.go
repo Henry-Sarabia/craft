@@ -16,7 +16,7 @@ type material struct {
 	Variants     []string `json:"variants"`
 }
 
-func (m material) randomModifier(res *Resources) (string, error) {
+func (m material) randomQuality(res *Resources) (string, error) {
 	qualName, err := randomString(m.Qualities)
 	if err != nil {
 		return "", errors.Wrap(err, "material qualities slice is empty")

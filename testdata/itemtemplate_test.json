@@ -15,9 +15,14 @@
             "gem",
             "stone"
         ],
-        "detail_variants":[
-            "beast",
-            "monstrosity"
+        "detail_variants": [
+            {
+                "label": "shape",
+                "variants":[
+                    "beast",
+                    "monstrosity"
+                ]
+            }
         ]
     },
     {
@@ -35,8 +40,13 @@
             "leather",
             "animal skin"
         ],
-        "detail_variants":[
-            "beverage"
+        "detail_variants": [
+            {
+                "label": "contents",
+                "variants":[
+                    "beverage"
+                ]
+            }
         ]
     },
     {
@@ -51,8 +61,13 @@
             "base metal",
             "precious metal"
         ],
-        "detail_variants":[
-            "beverage"
+        "detail_variants": [
+            {
+                "label": "contents",
+                "variants":[
+                    "beverage"
+                ]
+            }
         ]
     },
     {
@@ -71,8 +86,13 @@
             "precious metal",
             "wood"
         ],
-        "detail_variants":[
-            "engraving"
+        "details_variants": [
+            {
+                "label": "decoration",
+                "variants":[
+                    "engraving"
+                ]
+            }
         ]
     },
     {
@@ -88,9 +108,14 @@
             "cloth",
             "wood"
         ],
-        "detail_variants":[
-            "beast",
-            "humanoid"
+        "detail_variants": [
+            {
+                "label": "shape",
+                "variants":[
+                    "beast",
+                    "humanoid"
+                ]
+            }
         ]
     }
 ]
