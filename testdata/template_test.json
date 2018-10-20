@@ -5,6 +5,7 @@
         "base_value": 10,
         "base_weight": 1,
         "aliases":[
+            "figurine",
             "figure",
             "statuette",
             "effigy"
@@ -31,6 +32,7 @@
         "base_value": 0.5,
         "base_weight": 0.5,
         "aliases":[
+            "wineskin",
             "waterskin",
             "bota bag",
             "colambre",
@@ -55,6 +57,7 @@
         "base_value": 1,
         "base_weight": 0.2,
         "aliases":[
+            "flask",
             "decanter"
         ],
         "material_variants":[
@@ -76,6 +79,7 @@
         "base_value": 3,
         "base_weight": 0.05,
         "aliases":[
+            "ring",
             "memorial ring",
             "wedding ring",
             "wedding band",
@@ -101,6 +105,7 @@
         "base_value": 0.2,
         "base_weight": 0.3,
         "aliases":[
+            "doll",
             "toy puppet",
             "toy figurine"
         ],
