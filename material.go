@@ -16,13 +16,13 @@ type material struct {
 	Variants     []string `json:"variants"`
 }
 
-func (m material) randomQuality(res *Resources) (string, error) {
+func (m material) randomQuality(quals map[string]quality) (string, error) {
 	qualName, err := randomString(m.Qualities)
 	if err != nil {
 		return "", errors.Wrap(err, "material qualities slice is empty")
 	}
 
-	qual, ok := res.qualities[qualName]
+	qual, ok := quals[qualName]
 	if !ok {
 		return "", errors.Errorf("cannot find quality '%s' in available resources", qualName)
 	}

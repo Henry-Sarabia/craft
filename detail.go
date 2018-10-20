@@ -16,7 +16,7 @@ type detail struct {
 func (d detail) randomVariant() (string, error) {
 	v, err := randomString(d.Variants)
 	if err != nil {
-		return "", errors.Wrap(err, "detail variants slice is empty")
+		return "", errors.Wrap(err, "detail Variants slice is empty")
 	}
 
 	return v, nil

@@ -12,33 +12,13 @@ type Item struct {
 	Name     string            `json:"name"`
 	Material string            `json:"material"`
 	Quality  string            `json:"quality"`
-	Details  map[string]string `json:"detail"`
+	Details  map[string]string `json:"details"`
 	Format   string            `json:"format"`
 	Verb     string            `json:"verb"`
 	Value    float64           `json:"value"`
 	Weight   float64           `json:"weight"`
 
 	Description string `json:"description"`
-}
-
-// generateItem generates a new item using the provided template and resources.
-func generateItem(tmp *itemTemplate, res *Resources) (*Item, error) {
-	proto, err := tmp.craftPrototype(res)
-	if err != nil {
-		return nil, err
-	}
-
-	i, err := proto.craftItem(res)
-	if err != nil {
-		return nil, err
-	}
-
-	err = i.composeDescription()
-	if err != nil {
-		return nil, err
-	}
-
-	return i, nil
 }
 
 func (i *Item) composeDescription() error {

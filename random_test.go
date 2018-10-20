@@ -21,7 +21,7 @@ func TestRandomString(t *testing.T) {
 }
 
 func TestRandomStringEmpty(t *testing.T) {
-	empty := []string{}
+	var empty []string
 
 	_, err := randomString(empty)
 	if err != errEmptySlice {

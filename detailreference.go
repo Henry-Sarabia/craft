@@ -7,7 +7,7 @@ type detailReference struct {
 	Variants []string `json:"variants"`
 }
 
-func (df *detailReference) random() (string, error) {
+func (df *detailReference) randomVariant() (string, error) {
 	v, err := randomString(df.Variants)
 	if err != nil {
 		return "", errors.Wrap(err, "detailReference variants slice is empty")
