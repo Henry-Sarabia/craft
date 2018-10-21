@@ -29,7 +29,7 @@ func (t *template) randomName() (string, error) {
 
 func (t *template) randomMaterial() (string, error) {
 	mat, err := randomString(t.MaterialVariants)
-	if err != nil {
+	if err != nil && err != errEmptySlice {
 		return "", errors.Wrap(err, "cannot get random material from template")
 	}
 
@@ -41,7 +41,7 @@ func (t *template) randomDetails() (map[string]string, error) {
 
 	for _, d := range t.DetailVariants {
 		r, err := d.randomVariant()
-		if err != nil {
+		if err != nil && err != errEmptySlice {
 			return nil, errors.Wrap(err, "cannot get random detailReference variant from template")
 		}
 		m[d.Label] = r
