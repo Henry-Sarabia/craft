@@ -35,6 +35,42 @@ func TestMaterialRandomVariantEmpty(t *testing.T) {
 	}
 }
 
+func TestMaterialRandomQuality(t *testing.T) {
+	rand.Seed(1)
+
+	d, err := loadMaterials(testFileMaterial)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	q, err := loadQualities(testFileQuality)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	qual, err := d["wood"].randomQuality(q)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if qual != "heavily charred" {
+		t.Errorf("got: <%v>, want: <%v>", qual, "heavily charred")
+	}
+}
+
+func TestMaterialRandomQualityEmpty(t *testing.T) {
+	m := material{
+		Qualities: []string{},
+	}
+
+	q := make(map[string]quality)
+
+	_, err := m.randomQuality(q)
+	if err == nil {
+		t.Error("got: <nil>, want :<error>")
+	}
+}
+
 func TestReadMaterials(t *testing.T) {
 	f, err := os.Open(testFileMaterial)
 	if err != nil {

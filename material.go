@@ -16,6 +16,15 @@ type material struct {
 	Variants     []string `json:"variants"`
 }
 
+func (m material) randomVariant() (string, error) {
+	v, err := randomString(m.Variants)
+	if err != nil {
+		return "", errors.Wrap(err, "material variants slice is empty")
+	}
+
+	return v, nil
+}
+
 func (m material) randomQuality(quals map[string]quality) (string, error) {
 	qualName, err := randomString(m.Qualities)
 	if err != nil {
@@ -28,15 +37,6 @@ func (m material) randomQuality(quals map[string]quality) (string, error) {
 	}
 
 	return qual.randomVariant()
-}
-
-func (m material) randomVariant() (string, error) {
-	v, err := randomString(m.Variants)
-	if err != nil {
-		return "", errors.Wrap(err, "material variants slice is empty")
-	}
-
-	return v, nil
 }
 
 func readMaterials(r io.Reader) (map[string]material, error) {
