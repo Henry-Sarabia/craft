@@ -1,17 +1,227 @@
 package craft
 
 import (
+	"math/rand"
 	"os"
 	"testing"
 )
 
-func TestCrafterSelectTemplate(t *testing.T) {
-	r, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+func TestCrafterNewItem(t *testing.T) {
+	rand.Seed(1)
+
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	tmp, err := r.randomTemplate()
+	i, err := c.NewItem()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if i.Name != "bota bag" {
+		t.Errorf("got: <%v>, want: <%v>", i.Name, "bota bag")
+	}
+
+	if i.Value != 1.5 {
+		t.Errorf("got: <%v>, want: <%v>", i.Value, 1.5)
+	}
+
+	if i.Weight != 1 {
+		t.Errorf("got: <%v>, want: <%v>", i.Weight, 1)
+	}
+}
+
+func TestCrafterGenerateItem(t *testing.T) {
+	rand.Seed(1)
+
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fig := c.templates["figurine"]
+
+	i, err := c.generateItem(&fig)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if i.Value != 30 {
+		t.Errorf("got: <%v>, want: <%v>", i.Value, 30)
+	}
+
+	if i.Weight != 9 {
+		t.Errorf("got: <%v>, want: <%v>", i.Weight, 9)
+	}
+}
+
+func TestCrafterToPrototype(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fig := c.templates["figurine"]
+
+	p, err := c.toPrototype(&fig)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if p.value != 10 {
+		t.Errorf("got: <%v>, want: <%v>", p.value, 10)
+	}
+
+	if p.weight != 1 {
+		t.Errorf("got: <%v>, want: <%v>", p.weight, 1)
+	}
+}
+
+func TestCrafterToItem(t *testing.T) {
+	rand.Seed(1)
+
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fig := c.templates["figurine"]
+
+	p, err := c.toPrototype(&fig)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	i, err := c.toItem(p)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if i.Value != 30 {
+		t.Errorf("got: <%v>, want: <%v>", i.Value, 30)
+	}
+
+	if i.Weight != 9 {
+		t.Errorf("got: <%v>, want: <%v>", i.Weight, 9)
+	}
+}
+
+func TestCrafterGetClass(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	cl, err := c.getClass("art")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if cl.Name != "art" {
+		t.Errorf("got: <%v>, want: <%v>", cl.Name, "art")
+	}
+}
+
+func TestCrafterGetClassEmpty(t *testing.T) {
+	c := &Crafter{
+		classes: map[string]class{},
+	}
+
+	_, err := c.getClass("art")
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
+
+func TestCrafterGetMaterial(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m, err := c.getMaterial("wood")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if m.Name != "wood" {
+		t.Errorf("got: <%v>, want: <%v>", m.Name, "wood")
+	}
+}
+
+func TestCrafterGetMaterialEmpty(t *testing.T) {
+	c := &Crafter{
+		materials: map[string]material{},
+	}
+
+	_, err := c.getMaterial("wood")
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
+
+func TestCrafterGetDetail(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	d, err := c.getDetail("beverage")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if d.Name != "beverage" {
+		t.Errorf("got: <%v>, want: <%v>", d.Name, "beverage")
+	}
+}
+
+func TestCrafterGetDetailEmpty(t *testing.T) {
+	c := &Crafter{
+		details: map[string]detail{},
+	}
+
+	_, err := c.getDetail("beverage")
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
+
+func TestCrafterGetDetails(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	d, err := c.getDetails(map[string]string{"contents": "beverage"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if d["contents"].Name != "beverage" {
+		t.Errorf("got: <%v>, want: <%v>", d["contents"].Name, "beverage")
+	}
+}
+
+func TestCrafterGetDetailsEmpty(t *testing.T) {
+	c := &Crafter{
+		details: map[string]detail{},
+	}
+
+	_, err := c.getDetails(nil)
+	if err == nil {
+		t.Error("got: <nil>, want: <error>")
+	}
+}
+
+func TestCrafterRandomTemplate(t *testing.T) {
+	c, err := NewFromFiles(testFileTemplate, testFileClass, testFileMaterial, testFileQuality, testFileDetail)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tmp, err := c.randomTemplate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,12 +231,12 @@ func TestCrafterSelectTemplate(t *testing.T) {
 	}
 }
 
-func TestCrafterSelectTemplateEmpty(t *testing.T) {
-	r := Crafter{
+func TestCrafterRandomTemplateEmpty(t *testing.T) {
+	c := Crafter{
 		templates: map[string]template{},
 	}
 
-	_, err := r.randomTemplate()
+	_, err := c.randomTemplate()
 	if err != errEmptyTemplateMap {
 		t.Errorf("got: <%v>, want: <%v>", nil, errEmptyTemplateMap)
 	}
