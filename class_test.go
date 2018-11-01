@@ -8,7 +8,7 @@ import (
 
 const testFileClass = "testdata/class_test.json"
 
-func TestClassRandomVerb(t *testing.T) {
+func TestConfigurationRandomVerb(t *testing.T) {
 	rand.Seed(1)
 
 	cl, err := loadClasses(testFileClass)
@@ -16,7 +16,7 @@ func TestClassRandomVerb(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v, err := cl["art"].randomVerb()
+	v, err := cl["art"].Configs[0].randomVerb()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,9 +27,10 @@ func TestClassRandomVerb(t *testing.T) {
 }
 
 func TestClassRandomVerbEmpty(t *testing.T) {
-	cl := class{VerbVariants: []string{}}
-
-	_, err := cl.randomVerb()
+	cf := configuration{
+		VerbVariants: []string{},
+	}
+	_, err := cf.randomVerb()
 	if err == nil {
 		t.Error("got: <nil>, want: <error>")
 	}
@@ -55,8 +56,8 @@ func TestReadClasses(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", cl["art"].Name, "art")
 	}
 
-	if len(cl["jewelry"].VerbVariants) != 6 {
-		t.Errorf("got: <%v>, want: <%v>", len(cl["jewelry"].VerbVariants), 6)
+	if len(cl["jewelry"].Configs[1].VerbVariants) != 7 {
+		t.Errorf("got: <%v>, want: <%v>", len(cl["jewelry"].Configs[1].VerbVariants), 7)
 	}
 }
 
@@ -83,8 +84,8 @@ func TestLoadClasses(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", cl["art"].Name, "art")
 	}
 
-	if len(cl["jewelry"].VerbVariants) != 6 {
-		t.Errorf("got: <%v>, want: <%v>", len(cl["jewelry"].VerbVariants), 6)
+	if len(cl["jewelry"].Configs[0].VerbVariants) != 10 {
+		t.Errorf("got: <%v>, want: <%v>", len(cl["jewelry"].Configs[0].VerbVariants), 10)
 	}
 }
 

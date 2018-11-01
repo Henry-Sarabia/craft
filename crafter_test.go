@@ -14,13 +14,20 @@ func TestCrafterNewItem(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	i, err := c.NewItem()
+	tmp := c.templates["wineskin"]
+
+	_, err = c.NewItem()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if i.Name != "bota bag" {
-		t.Errorf("got: <%v>, want: <%v>", i.Name, "bota bag")
+	i, err := c.generateItem(&tmp)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if i.Name != "canteen" {
+		t.Errorf("got: <%v>, want: <%v>", i.Name, "canteen")
 	}
 
 	if i.Value != 1.5 {
@@ -310,8 +317,8 @@ func TestCrafterNew(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", c.qualities["wear"].Name, "wear")
 	}
 
-	if len(c.details) != 5 {
-		t.Errorf("got: <%v>, want: <%v>", len(c.details), 5)
+	if len(c.details) != 7 {
+		t.Errorf("got: <%v>, want: <%v>", len(c.details), 7)
 	}
 
 	if c.details["beverage"].Name != "beverage" {
@@ -421,8 +428,8 @@ func TestCrafterNewFromFiles(t *testing.T) {
 		t.Errorf("got: <%v>, want: <%v>", c.qualities["wear"].Name, "wear")
 	}
 
-	if len(c.details) != 5 {
-		t.Errorf("got: <%v>, want: <%v>", len(c.details), 5)
+	if len(c.details) != 7 {
+		t.Errorf("got: <%v>, want: <%v>", len(c.details), 7)
 	}
 
 	if c.details["beverage"].Name != "beverage" {

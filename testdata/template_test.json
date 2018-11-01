@@ -90,11 +90,23 @@
             "precious metal",
             "wood"
         ],
-        "details_variants": [
+        "detail_variants": [
             {
-                "label": "decoration",
+                "label": "gemstone",
                 "variants":[
-                    "engraving"
+                    "gemstone"
+                ]
+            },
+            {
+                "label": "language",
+                "variants":[
+                    "language"
+                ]
+            },
+            {
+                "label": "inscription",
+                "variants":[
+                    "inscription"
                 ]
             }
         ]

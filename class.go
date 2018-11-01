@@ -3,25 +3,40 @@ package craft
 import (
 	"encoding/json"
 	"io"
+	"math/rand"
 	"os"
 
 	"github.com/pkg/errors"
 )
 
 type class struct {
-	Name         string   `json:"name"`
-	Format       string   `json:"format"`
-	Example      string   `json:"example"`
-	VerbVariants []string `json:"verb_variants"`
+	Name    string          `json:"name"`
+	Configs []configuration `json:"configurations"`
 }
 
-func (cl class) randomVerb() (string, error) {
-	v, err := randomString(cl.VerbVariants)
+type configuration struct {
+	Format          string   `json:"format"`
+	Example         string   `json:"example"`
+	RequiredDetails []string `json:"required_details"`
+	VerbVariants    []string `json:"verb_variants"`
+}
+
+func (cf configuration) randomVerb() (string, error) {
+	v, err := randomString(cf.VerbVariants)
 	if err != nil {
-		return "", errors.Wrap(err, "class VerbVariants slice is empty")
+		return "", errors.Wrap(err, "configuration VerbVariants slice is empty")
 	}
 
 	return v, nil
+}
+
+func (cl class) randomConfiguration() (*configuration, error) {
+	if len(cl.Configs) < 1 {
+		return nil, errors.New("class configurations slice is empty")
+	}
+
+	r := rand.Intn(len(cl.Configs))
+	return &cl.Configs[r], nil
 }
 
 func readClasses(r io.Reader) (map[string]class, error) {

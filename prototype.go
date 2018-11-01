@@ -4,7 +4,8 @@ type prototype struct {
 	name     string
 	value    float64
 	weight   float64
-	class    *class
+	class    string
+	config   *configuration
 	material *material
 	details  map[string]*detail
 }
@@ -43,11 +44,11 @@ func (p *prototype) getDetails() (map[string]string, error) {
 }
 
 func (p *prototype) getFormat() (string, error) {
-	return p.class.Format, nil
+	return p.config.Format, nil
 }
 
 func (p *prototype) getVerb() (string, error) {
-	return p.class.randomVerb()
+	return p.config.randomVerb()
 }
 
 func (p *prototype) getValue() float64 {

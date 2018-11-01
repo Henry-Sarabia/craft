@@ -67,6 +67,11 @@ func (c *Crafter) toPrototype(tmp *template) (*prototype, error) {
 		return nil, err
 	}
 
+	cf, err := cl.randomConfiguration()
+	if err != nil {
+		return nil, err
+	}
+
 	m, err := tmp.randomMaterial()
 	if err != nil {
 		return nil, err
@@ -91,7 +96,8 @@ func (c *Crafter) toPrototype(tmp *template) (*prototype, error) {
 		name:     name,
 		value:    tmp.BaseValue,
 		weight:   tmp.BaseWeight,
-		class:    cl,
+		class:    tmp.Class,
+		config:   cf,
 		material: mat,
 		details:  dets,
 	}, nil

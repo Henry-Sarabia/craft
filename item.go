@@ -12,7 +12,7 @@ type Item struct {
 	Name     string            `json:"name"`
 	Material string            `json:"material"`
 	Quality  string            `json:"quality"`
-	Details  map[string]string `json:"details"`
+	Details  map[string]string `json:"details,omitempty"`
 	Format   string            `json:"format"`
 	Verb     string            `json:"verb"`
 	Value    float64           `json:"value"`
