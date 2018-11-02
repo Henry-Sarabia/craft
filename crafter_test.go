@@ -14,20 +14,16 @@ func TestCrafterNewItem(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	tmp := c.templates["wineskin"]
-
 	_, err = c.NewItem()
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	tmp := c.templates["wineskin"]
+
 	i, err := c.generateItem(&tmp)
 	if err != nil {
 		t.Fatal(err)
-	}
-
-	if i.Name != "canteen" {
-		t.Errorf("got: <%v>, want: <%v>", i.Name, "canteen")
 	}
 
 	if i.Value != 1.5 {

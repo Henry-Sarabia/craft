@@ -15,6 +15,7 @@ type class struct {
 }
 
 type configuration struct {
+	Name            string   `json:"name"`
 	Format          string   `json:"format"`
 	Example         string   `json:"example"`
 	RequiredDetails []string `json:"required_details"`
@@ -37,6 +38,16 @@ func (cl class) randomConfiguration() (*configuration, error) {
 
 	r := rand.Intn(len(cl.Configs))
 	return &cl.Configs[r], nil
+}
+
+func (cl class) getConfig(name string) (*configuration, error) {
+	for _, cf := range cl.Configs {
+		if cf.Name == name {
+			return &cf, nil
+		}
+	}
+
+	return nil, errors.Errorf("cannot find class configuration '%s'", name)
 }
 
 func readClasses(r io.Reader) (map[string]class, error) {

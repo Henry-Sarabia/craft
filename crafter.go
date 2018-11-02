@@ -67,7 +67,12 @@ func (c *Crafter) toPrototype(tmp *template) (*prototype, error) {
 		return nil, err
 	}
 
-	cf, err := cl.randomConfiguration()
+	cf, err := tmp.randomConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	config, err := cl.getConfig(cf)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +102,7 @@ func (c *Crafter) toPrototype(tmp *template) (*prototype, error) {
 		value:    tmp.BaseValue,
 		weight:   tmp.BaseWeight,
 		class:    tmp.Class,
-		config:   cf,
+		config:   config,
 		material: mat,
 		details:  dets,
 	}, nil

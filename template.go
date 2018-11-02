@@ -11,6 +11,7 @@ import (
 type template struct {
 	Name             string            `json:"name"`
 	Class            string            `json:"item_class"`
+	Configs          []string          `json:"configurations"`
 	BaseValue        float64           `json:"base_value"`  // Measured in gold pieces
 	BaseWeight       float64           `json:"base_weight"` // Measured in pounds
 	Aliases          []string          `json:"aliases"`
@@ -48,6 +49,15 @@ func (t *template) randomDetails() (map[string]string, error) {
 	}
 
 	return m, nil
+}
+
+func (t *template) randomConfig() (string, error) {
+	cf, err := randomString(t.Configs)
+	if err != nil {
+		return "", errors.Wrap(err, "template configs slice is empty")
+	}
+
+	return cf, nil
 }
 
 func readTemplates(r io.Reader) (map[string]template, error) {

@@ -3,6 +3,7 @@
         "name": "art",
         "configurations":[
             {
+                "name": "shaped",
                 "format": "<article> <quality> <material> <name> <verb> <article> <shape>",
                 "example": "<an> <ironwood> <statue> <crafted in the likeness of> <an> <eagle>",
                 "required_details":[
@@ -25,6 +26,7 @@
         "name": "liquid container", 
         "configurations":[
             {
+                "name": "filled",
                 "format": "<article> <quality> <material> <name> <verb> <contents>",
                 "example": "<a> <calf leather> <wineskin> <half full of> <mulled ale>",
                 "required_details":[
@@ -45,11 +47,12 @@
                 ]
             }
         ]
-    },
+    }, 
     {
         "name": "jewelry",
         "configurations":[
             {
+                "name": "encrusted",
                 "format": "<article> <quality> <material> <name> <verb> <gemstone>",
                 "example": "<a> <rose gold> <wedding ring> <studded with> <rubies>",
                 "required_details":[
@@ -69,6 +72,7 @@
                 ]
             },
             {
+                "name": "engraved",
                 "format": "<article> <quality> <material> <name> <verb> <language> <inscription>",
                 "example": "<a> <rose gold> <wedding ring> <adorned with> <elven> <engravings>",
                 "required_details":[
@@ -83,6 +87,17 @@
                     "designed with",
                     "engraved with",
                     "with hints of"
+                ]
+            },
+            {
+                "name": "simple",
+                "format": "<article> <quality> <name> <verb> <material>",
+                "example": "<a> <slightly rusted> <necklace> <made of> <bronze>",
+                "verb_variants":[
+                    "made of",
+                    "made out of",
+                    "of",
+                    "made from"
                 ]
             }
         ]

@@ -2,6 +2,9 @@
     {
         "name": "figurine",
         "item_class": "art",
+        "configurations":[
+            "shaped"
+        ],
         "base_value": 10,
         "base_weight": 1,
         "aliases":[
@@ -29,6 +32,9 @@
     {
         "name": "wineskin",
         "item_class": "liquid container",
+        "configurations":[
+            "filled"
+        ],
         "base_value": 0.5,
         "base_weight": 0.5,
         "aliases":[
@@ -54,6 +60,9 @@
     {
         "name": "flask",
         "item_class": "liquid container",
+        "configurations":[
+            "filled"
+        ],
         "base_value": 1,
         "base_weight": 0.2,
         "aliases":[
@@ -76,6 +85,11 @@
     {
         "name": "ring",
         "item_class": "jewelry",
+        "configurations":[
+            "encrusted",
+            "engraved",
+            "simple"
+        ],
         "base_value": 3,
         "base_weight": 0.05,
         "aliases":[
@@ -114,6 +128,9 @@
     {
         "name": "doll",
         "item_class": "art",
+        "configurations":[
+            "shaped"
+        ],
         "base_value": 0.2,
         "base_weight": 0.3,
         "aliases":[
