@@ -10,6 +10,7 @@ import (
 // Item represents an item that would commonly be found in a medieval RPG game.
 type Item struct {
 	Name     string            `json:"name"`
+	Class    string            `json:"class"`
 	Material string            `json:"material"`
 	Quality  string            `json:"quality"`
 	Details  map[string]string `json:"details,omitempty"`

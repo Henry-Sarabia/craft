@@ -134,6 +134,7 @@ func (c *Crafter) toItem(p *prototype) (*Item, error) {
 	}
 
 	i.Name = p.name
+	i.Class = p.class
 	i.Value = p.getValue()
 	i.Weight = p.getWeight()
 

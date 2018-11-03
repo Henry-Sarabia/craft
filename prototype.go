@@ -1,5 +1,7 @@
 package craft
 
+import "math"
+
 type prototype struct {
 	name     string
 	value    float64
@@ -52,9 +54,16 @@ func (p *prototype) getVerb() (string, error) {
 }
 
 func (p *prototype) getValue() float64 {
-	return p.value * p.material.ValueFactor
+	v := p.value * p.material.ValueFactor
+	return preciseRound(v, 1)
 }
 
 func (p *prototype) getWeight() float64 {
-	return p.weight * p.material.WeightFactor
+	w := p.weight * p.material.WeightFactor
+	return preciseRound(w, 1)
+}
+
+func preciseRound(num float64, pre int) float64 {
+	x := math.Pow(10, float64(pre))
+	return float64(math.Round(num*x)) / x
 }
